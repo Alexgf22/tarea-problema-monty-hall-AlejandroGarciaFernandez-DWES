@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.*;
 
 public class MontyHallPrueba {
 
@@ -10,30 +10,25 @@ public class MontyHallPrueba {
         int mantenerMisma = 0;
 
         for (int i = 0; i < numSimulaciones; i++) {
-
-            /*
-            0: Representa la primera puerta
-            1: Representa la segunda puerta
-            2: Representa la tercera puerta
-             */
             int premioTrasPuerta = random.nextInt(3);
 
-            // Ahora el participante escoge una de las puertas
+            // Elección del participante
             int eleccionDelParticipante = random.nextInt(3);
 
-            // A continuación, Monty procede a abrir una puerta
-            int montyAbrePuerta = 0;
-            while (montyAbrePuerta == premioTrasPuerta || montyAbrePuerta == eleccionDelParticipante) {
-                montyAbrePuerta++;
-            }
+            // Monty abre una puerta
+            Set<Integer> puertasAbiertas = new HashSet<>();
+            puertasAbiertas.add(premioTrasPuerta);
+            puertasAbiertas.add(eleccionDelParticipante);
 
-            // El participante piensa si quiere cambiar de puerta
-            int nuevaEleccion = 0;
-            while (nuevaEleccion == eleccionDelParticipante || nuevaEleccion == montyAbrePuerta) {
-                nuevaEleccion++;
-            }
+            int montyAbrePuerta;
+            do {
+                montyAbrePuerta = random.nextInt(3);
+            } while (puertasAbiertas.contains(montyAbrePuerta));
 
-            // Sumas totales de cada caso
+            // El participante decide si quiere cambiar o no de puerta
+            int nuevaEleccion = 3 - eleccionDelParticipante - montyAbrePuerta;
+
+            // Actualizar el recuento
             if (nuevaEleccion == premioTrasPuerta) {
                 cambiarDePuerta++;
             } else {
